@@ -1,0 +1,11 @@
+{
+    "name": "my-nodejs-project",
+    "version": "1.0.0",
+    "description": "My Node.js Project",
+    "main": "server.js",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^5.12.0",
+      "body-parser": "^1.19.0"
+    }
+  }

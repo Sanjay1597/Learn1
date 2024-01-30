@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Data Search</title>
+  <style>
+    /* Add your custom CSS styles here */
+  </style>
+</head>
+<body>
+  <h1>Student Data Search</h1>
+  <div>
+    <label for="searchInput">Search:</label>
+    <input type="text" id="searchInput" placeholder="Enter search term">
+    <button onclick="search()">Search</button>
+  </div>
+  <div id="searchResults"></div>
+
+  <script>
+    function search() {
+      const searchTerm = document.getElementById('searchInput').value;
+
+      fetch('http://localhost:3000/search', { // Replace with the correct server URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ searchTerm })
+      })
+      .then(response => response.json())
+      .then(data => {
+        displaySearchResults(data);
+      })
+      .catch(err => {
+        console.error('Error fetching search results:', err);
+      });
+    }
+
+    function displaySearchResults(results) {
+      const searchResultsContainer = document.getElementById('searchResults');
+      searchResultsContainer.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResultsContainer.innerHTML = '<p>No results found.</p>';
+      } else {
+        const resultList = document.createElement('ul');
+        results.forEach(student => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Name: ${student.name}, University Code: ${student.universityCode}, Father's Name: ${student.fatherName}`;
+          resultList.appendChild(listItem);
+        });
+        searchResultsContainer.appendChild(resultList);
+      }
+    }
+  </script>
+</body>
+</html>
